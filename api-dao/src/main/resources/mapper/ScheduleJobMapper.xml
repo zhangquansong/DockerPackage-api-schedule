@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.clt.api.mapper.ScheduleJobMapper">
+
+	<!-- 通用查询映射结果 -->
+	<resultMap id="BaseResultMap" type="com.clt.api.entity.ScheduleJob">
+		<id column="job_id" property="jobId" />
+		<result column="bean_name" property="beanName" />
+		<result column="method_name" property="methodName" />
+		<result column="params" property="params" />
+		<result column="cron_expression" property="cronExpression" />
+		<result column="status" property="status" />
+		<result column="remark" property="remark" />
+		<result column="create_time" property="createTime" />
+		<result column="update_time" property="updateTime" />
+		<result column="is_delete" property="isDelete" />
+		<result column="version" property="version" />
+	</resultMap>
+
+    <!-- 通用查询结果列 -->
+    <sql id="Base_Column_List">
+        job_id AS jobId, bean_name AS beanName, method_name AS methodName, params, cron_expression AS cronExpression, status, remark, create_time AS createTime, update_time AS updateTime, is_delete AS isDelete, version
+    </sql>
+
+	<update id="updateBatch">
+		update schedule_job set status = #{status} where job_id in
+		<foreach item="jobId" collection="jobIds"  open="(" separator="," close=")">
+			#{jobId}
+		</foreach>
+	</update>
+
+</mapper>
